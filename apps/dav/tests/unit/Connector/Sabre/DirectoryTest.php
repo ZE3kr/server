@@ -76,7 +76,6 @@ class TestViewDirectory extends \OC\Files\View {
  * @group DB
  */
 class DirectoryTest extends \Test\TestCase {
-
 	use UserTrait;
 
 	/** @var \OC\Files\View | \PHPUnit\Framework\MockObject\MockObject */
@@ -219,13 +218,13 @@ class DirectoryTest extends \Test\TestCase {
 
 		$this->view->expects($this->any())
 			->method('getRelativePath')
-			->willReturnCallback(function($path) {
+			->willReturnCallback(function ($path) {
 				return str_replace('/admin/files/', '', $path);
 			});
 
 		$this->view->expects($this->any())
 			->method('getAbsolutePath')
-			->willReturnCallback(function($path) {
+			->willReturnCallback(function ($path) {
 				return Filesystem::normalizePath('/admin/files' . $path);
 			});
 
