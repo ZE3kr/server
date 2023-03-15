@@ -61,7 +61,20 @@ class PreviewController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 *
-	 * @return DataResponse|FileDisplayResponse
+	 * Get a preview by file ID
+	 *
+	 * @param string $file Path of the file
+	 * @param int $x Width of the preview
+	 * @param int $y Height of the preview
+	 * @param bool $a Not crop the preview
+	 * @param bool $forceIcon Force returning an icon
+	 * @param string $mode How to crop the image
+	 * @return FileDisplayResponse<Http::STATUS_OK>|DataResponse<array, Http::STATUS_BAD_REQUEST|Http::STATUS_FORBIDDEN|Http::STATUS_NOT_FOUND>
+	 *
+	 * 200: Preview returned
+	 * 400: Getting preview is not possible
+	 * 403: Getting preview is not allowed
+	 * 404: File not found
 	 */
 	public function getPreview(
 		string $file = '',
@@ -88,7 +101,20 @@ class PreviewController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 *
-	 * @return DataResponse|FileDisplayResponse
+	 * Get a preview by file ID
+	 *
+	 * @param int $fileId ID of the file
+	 * @param int $x Width of the preview
+	 * @param int $y Height of the preview
+	 * @param bool $a Not crop the preview
+	 * @param bool $forceIcon Force returning an icon
+	 * @param string $mode How to crop the image
+	 * @return FileDisplayResponse<Http::STATUS_OK>|DataResponse<array, Http::STATUS_BAD_REQUEST|Http::STATUS_FORBIDDEN|Http::STATUS_NOT_FOUND>
+	 *
+	 * 200: Preview returned
+	 * 400: Getting preview is not possible
+	 * 403: Getting preview is not allowed
+	 * 404: File not found
 	 */
 	public function getPreviewByFileId(
 		int $fileId = -1,
@@ -114,7 +140,7 @@ class PreviewController extends Controller {
 	}
 
 	/**
-	 * @return DataResponse|FileDisplayResponse
+	 * @return FileDisplayResponse<Http::STATUS_OK>|DataResponse<array, Http::STATUS_BAD_REQUEST|Http::STATUS_FORBIDDEN|Http::STATUS_NOT_FOUND>
 	 */
 	private function fetchPreview(
 		Node $node,

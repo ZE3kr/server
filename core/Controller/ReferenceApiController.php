@@ -5,6 +5,7 @@ declare(strict_types=1);
  * @copyright Copyright (c) 2022 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
+ * @author Kate Döen <kate.doeen@nextcloud.com>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -24,11 +25,16 @@ declare(strict_types=1);
 
 namespace OC\Core\Controller;
 
+use OCA\Core\ResponseDefinitions;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Collaboration\Reference\IDiscoverableReferenceProvider;
 use OCP\Collaboration\Reference\IReferenceManager;
 use OCP\IRequest;
 
+/**
+ * @psalm-import-type CoreReference from ResponseDefinitions
+ * @psalm-import-type CoreReferenceProvider from ResponseDefinitions
+ */
 class ReferenceApiController extends \OCP\AppFramework\OCSController {
 	private IReferenceManager $referenceManager;
 	private ?string $userId;
@@ -44,6 +50,13 @@ class ReferenceApiController extends \OCP\AppFramework\OCSController {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * Extract references from a text
+	 *
+	 * @param string $text Text to extract from
+	 * @param bool $resolve Resolve the references
+	 * @param int $limit Maximum amount of references to extract
+	 * @return DataResponse<array{references: array<string, ?CoreReference>}, Http::STATUS_OK>
 	 */
 	public function extract(string $text, bool $resolve = false, int $limit = 1): DataResponse {
 		$references = $this->referenceManager->extractReferences($text);
@@ -65,6 +78,11 @@ class ReferenceApiController extends \OCP\AppFramework\OCSController {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * Resolve a reference
+	 *
+	 * @param string $reference Reference to resolve
+	 * @return DataResponse<array{references: array<string, CoreReference>}, Http::STATUS_OK>
 	 */
 	public function resolveOne(string $reference): DataResponse {
 		$resolvedReference = $this->referenceManager->resolveReference(trim($reference));
@@ -77,7 +95,11 @@ class ReferenceApiController extends \OCP\AppFramework\OCSController {
 	/**
 	 * @NoAdminRequired
 	 *
-	 * @param string[] $references
+	 * Resolve multiple references
+	 *
+	 * @param string[] $references References to resolve
+	 * @param int $limit Maximum amount of references to resolve
+	 * @return DataResponse<array{references: array<string, CoreReference>}, Http::STATUS_OK>
 	 */
 	public function resolve(array $references, int $limit = 1): DataResponse {
 		$result = [];
@@ -97,6 +119,10 @@ class ReferenceApiController extends \OCP\AppFramework\OCSController {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * Get the providers
+	 *
+	 * @return DataResponse<CoreReferenceProvider[], Http::STATUS_OK>
 	 */
 	public function getProvidersInfo(): DataResponse {
 		$providers = $this->referenceManager->getDiscoverableProviders();
@@ -108,6 +134,12 @@ class ReferenceApiController extends \OCP\AppFramework\OCSController {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * Touch a provider
+	 *
+	 * @param string $providerId ID of the provider
+	 * @param int|null $timestamp Timestamp of the last usage
+	 * @return DataResponse<array{success: bool}, Http::STATUS_OK>
 	 */
 	public function touchProvider(string $providerId, ?int $timestamp = null): DataResponse {
 		if ($this->userId !== null) {

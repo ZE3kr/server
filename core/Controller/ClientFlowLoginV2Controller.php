@@ -31,6 +31,7 @@ use OC\Authentication\Exceptions\InvalidTokenException;
 use OC\Core\Db\LoginFlowV2;
 use OC\Core\Exception\LoginFlowV2NotFoundException;
 use OC\Core\Service\LoginFlowV2Service;
+use OCA\Core\ResponseDefinitions;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\UseSession;
@@ -47,6 +48,10 @@ use OCP\IUser;
 use OCP\IUserSession;
 use OCP\Security\ISecureRandom;
 
+/**
+ * @psalm-import-type CoreLoginFlowV2Credentials from ResponseDefinitions
+ * @psalm-import-type CoreLoginFlowV2 from ResponseDefinitions
+ */
 class ClientFlowLoginV2Controller extends Controller {
 	public const TOKEN_NAME = 'client.flow.v2.login.token';
 	public const STATE_NAME = 'client.flow.v2.state.token';
@@ -84,6 +89,14 @@ class ClientFlowLoginV2Controller extends Controller {
 	/**
 	 * @NoCSRFRequired
 	 * @PublicPage
+	 *
+	 * Poll the login flow credentials
+	 *
+	 * @param string $token Token of the flow
+	 * @return JSONResponse<CoreLoginFlowV2Credentials, Http::STATUS_OK>|JSONResponse<array, Http::STATUS_NOT_FOUND>
+	 *
+	 * 200: Login flow credentials returned
+	 * 404: Login flow not found or completed
 	 */
 	public function poll(string $token): JSONResponse {
 		try {
@@ -98,6 +111,7 @@ class ClientFlowLoginV2Controller extends Controller {
 	/**
 	 * @NoCSRFRequired
 	 * @PublicPage
+	 * @IgnoreAPI
 	 */
 	#[UseSession]
 	public function landing(string $token, $user = ''): Response {
@@ -115,6 +129,7 @@ class ClientFlowLoginV2Controller extends Controller {
 	/**
 	 * @NoCSRFRequired
 	 * @PublicPage
+	 * @IgnoreAPI
 	 */
 	#[UseSession]
 	public function showAuthPickerPage($user = ''): StandaloneTemplateResponse {
@@ -148,6 +163,7 @@ class ClientFlowLoginV2Controller extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @NoSameSiteCookieRequired
+	 * @IgnoreAPI
 	 */
 	#[UseSession]
 	public function grantPage(?string $stateToken): StandaloneTemplateResponse {
@@ -282,6 +298,10 @@ class ClientFlowLoginV2Controller extends Controller {
 	/**
 	 * @NoCSRFRequired
 	 * @PublicPage
+	 *
+	 * Init a login flow
+	 *
+	 * @return JSONResponse<CoreLoginFlowV2, Http::STATUS_OK>
 	 */
 	public function init(): JSONResponse {
 		// Get client user agent

@@ -30,6 +30,7 @@ declare(strict_types=1);
  */
 namespace OC\Core\Controller;
 
+use OCA\Core\ResponseDefinitions;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
 use OCP\Collaboration\AutoComplete\AutoCompleteEvent;
@@ -39,6 +40,9 @@ use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IRequest;
 use OCP\Share\IShare;
 
+/**
+ * @psalm-import-type CoreAutocompleteResult from ResponseDefinitions
+ */
 class AutoCompleteController extends OCSController {
 	private ISearch $collaboratorSearch;
 	private IManager $autoCompleteManager;
@@ -58,7 +62,17 @@ class AutoCompleteController extends OCSController {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * Autocomplete a query
+	 *
+	 * @param string $search Text to search for
+	 * @param string|null $itemType Type of the items to search for
+	 * @param string|null $itemId ID of the items to search for
 	 * @param string|null $sorter can be piped, top prio first, e.g.: "commenters|share-recipients"
+	 * @param int[] $shareTypes Types of shares to search for
+	 * @param int $limit Maximum number of results to return
+	 *
+	 * @return DataResponse<CoreAutocompleteResult[], Http::STATUS_OK>
 	 */
 	public function get(string $search, ?string $itemType, ?string $itemId, ?string $sorter = null, array $shareTypes = [IShare::TYPE_USER], int $limit = 10): DataResponse {
 		// if enumeration/user listings are disabled, we'll receive an empty
@@ -95,6 +109,9 @@ class AutoCompleteController extends OCSController {
 		return new DataResponse($results);
 	}
 
+	/**
+	 * @return CoreAutocompleteResult[]
+	 */
 	protected function prepareResultArray(array $results): array {
 		$output = [];
 		foreach ($results as $type => $subResult) {

@@ -6,6 +6,7 @@ declare(strict_types=1);
  * @copyright Copyright (c) 2022 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
+ * @author Kate Döen <kate.doeen@nextcloud.com>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -45,6 +46,10 @@ class TranslationApiController extends \OCP\AppFramework\OCSController {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * Get the list of supported languages
+	 *
+	 * @return DataResponse<array{languages: array{from: string, fromLabel: string, to: string, toLabel: string}[], languageDetection: bool}, Http::STATUS_OK>
 	 */
 	public function languages(): DataResponse {
 		return new DataResponse([
@@ -55,6 +60,17 @@ class TranslationApiController extends \OCP\AppFramework\OCSController {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * Translate a text
+	 *
+	 * @param string $text Text to be translated
+	 * @param string|null $fromLanguage Language to translate from
+	 * @param string $toLanguage Language to translate to
+	 * @return DataResponse<array{text: string}, Http::STATUS_OK>|DataResponse<array{message: string}, Http::STATUS_NOT_FOUND|Http::STATUS_PRECONDITION_FAILED|Http::STATUS_INTERNAL_SERVER_ERROR>
+	 *
+	 * 200: Translated text returned
+	 * 404: Language not detected
+	 * 412: Translating is not possible
 	 */
 	public function translate(string $text, ?string $fromLanguage, string $toLanguage): DataResponse {
 		try {

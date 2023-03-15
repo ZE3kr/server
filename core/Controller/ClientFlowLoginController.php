@@ -12,6 +12,7 @@
  * @author Roeland Jago Douma <roeland@famdouma.nl>
  * @author RussellAult <RussellAult@users.noreply.github.com>
  * @author Sergej Nikolaev <kinolaev@gmail.com>
+ * @author Kate Döen <kate.doeen@nextcloud.com>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -127,6 +128,7 @@ class ClientFlowLoginController extends Controller {
 	/**
 	 * @PublicPage
 	 * @NoCSRFRequired
+	 * @IgnoreAPI
 	 */
 	#[UseSession]
 	public function showAuthPickerPage(string $clientIdentifier = '', string $user = '', int $direct = 0): StandaloneTemplateResponse {
@@ -194,6 +196,7 @@ class ClientFlowLoginController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @NoSameSiteCookieRequired
+	 * @IgnoreAPI
 	 */
 	#[UseSession]
 	public function grantPage(string $stateToken = '',

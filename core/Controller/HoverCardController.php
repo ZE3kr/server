@@ -5,6 +5,7 @@ declare(strict_types=1);
  * @copyright 2021 Joas Schilling <coding@schilljs.com>
  *
  * @author Joas Schilling <coding@schilljs.com>
+ * @author Kate Döen <kate.doeen@nextcloud.com>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -25,6 +26,7 @@ declare(strict_types=1);
 namespace OC\Core\Controller;
 
 use OC\Contacts\ContactsMenu\Manager;
+use OCA\Core\ResponseDefinitions;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Contacts\ContactsMenu\IEntry;
@@ -32,6 +34,9 @@ use OCP\IRequest;
 use OCP\IUserSession;
 use OCP\Share\IShare;
 
+/**
+ * @psalm-import-type CoreContactsAction from ResponseDefinitions
+ */
 class HoverCardController extends \OCP\AppFramework\OCSController {
 	private Manager $manager;
 	private IUserSession $userSession;
@@ -44,6 +49,14 @@ class HoverCardController extends \OCP\AppFramework\OCSController {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * Get the user details for a hovercard
+	 *
+	 * @param string $userId ID of the user
+	 * @return DataResponse<array{userId: string, displayName: string, actions: CoreContactsAction[]}, Http::STATUS_OK>|DataResponse<array, Http::STATUS_NOT_FOUND>
+	 *
+	 * 200: User details returned
+	 * 404: User not found
 	 */
 	public function getUser(string $userId): DataResponse {
 		$contact = $this->manager->findOne($this->userSession->getUser(), IShare::TYPE_USER, $userId);

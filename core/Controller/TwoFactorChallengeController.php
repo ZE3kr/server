@@ -7,6 +7,7 @@
  * @author Joas Schilling <coding@schilljs.com>
  * @author Lukas Reschke <lukas@statuscode.ch>
  * @author Roeland Jago Douma <roeland@famdouma.nl>
+ * @author Kate Döen <kate.doeen@nextcloud.com>
  *
  * @license AGPL-3.0
  *
@@ -86,6 +87,7 @@ class TwoFactorChallengeController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @TwoFactorSetUpDoneRequired
+	 * @IgnoreAPI
 	 *
 	 * @param string $redirect_url
 	 * @return StandaloneTemplateResponse
@@ -112,6 +114,7 @@ class TwoFactorChallengeController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @TwoFactorSetUpDoneRequired
+	 * @IgnoreAPI
 	 *
 	 * @param string $challengeProviderId
 	 * @param string $redirect_url
@@ -163,6 +166,7 @@ class TwoFactorChallengeController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @TwoFactorSetUpDoneRequired
+	 * @IgnoreAPI
 	 *
 	 * @UserRateThrottle(limit=5, period=100)
 	 *
@@ -208,6 +212,7 @@ class TwoFactorChallengeController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @IgnoreAPI
 	 */
 	public function setupProviders(): StandaloneTemplateResponse {
 		$user = $this->userSession->getUser();
@@ -224,6 +229,7 @@ class TwoFactorChallengeController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @IgnoreAPI
 	 */
 	public function setupProvider(string $providerId) {
 		$user = $this->userSession->getUser();
@@ -255,6 +261,7 @@ class TwoFactorChallengeController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @IgnoreAPI
 	 *
 	 * @todo handle the extreme edge case of an invalid provider ID and redirect to the provider selection page
 	 */

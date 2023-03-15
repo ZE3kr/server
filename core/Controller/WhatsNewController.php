@@ -4,6 +4,7 @@
  *
  * @author Arthur Schiwon <blizzz@arthur-schiwon.de>
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
+ * @author Kate Döen <kate.doeen@nextcloud.com>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -70,6 +71,13 @@ class WhatsNewController extends OCSController {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * Get the changes
+	 *
+	 * @return DataResponse<array{changelogURL: string, product: string, version: string, whatsNew: array{regular: string[], admin: string[]}}, Http::STATUS_OK>|DataResponse<array, Http::STATUS_NO_CONTENT>
+	 *
+	 * 200: Changes returned
+	 * 204: No changes
 	 */
 	public function get():DataResponse {
 		$user = $this->userSession->getUser();
@@ -108,8 +116,15 @@ class WhatsNewController extends OCSController {
 	/**
 	 * @NoAdminRequired
 	 *
+	 * Dismiss the changes
+	 *
+	 * @param string $version Version to dismiss the changes for
+	 *
+	 * @return DataResponse<array, Http::STATUS_OK>
 	 * @throws \OCP\PreConditionNotMetException
 	 * @throws DoesNotExistException
+	 *
+	 * 200: Changes dismissed
 	 */
 	public function dismiss(string $version):DataResponse {
 		$user = $this->userSession->getUser();

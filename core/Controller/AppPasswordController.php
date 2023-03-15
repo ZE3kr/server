@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @author Christoph Wurst <christoph@winzerhof-wurst.at>
  * @author Daniel Kesselberg <mail@danielkesselberg.de>
  * @author Roeland Jago Douma <roeland@famdouma.nl>
+ * @author Kate Döen <kate.doeen@nextcloud.com>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -67,7 +68,12 @@ class AppPasswordController extends \OCP\AppFramework\OCSController {
 	/**
 	 * @NoAdminRequired
 	 *
-	 * @throws OCSForbiddenException
+	 * Create app password
+	 *
+	 * @return DataResponse<array{apppassword: string}, Http::STATUS_OK>
+	 * @throws OCSForbiddenException Not allowed to create app password
+	 *
+	 * 200: App password returned
 	 */
 	public function getAppPassword(): DataResponse {
 		// We do not allow the creation of new tokens if this is an app password
@@ -112,6 +118,13 @@ class AppPasswordController extends \OCP\AppFramework\OCSController {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * Delete app password
+	 *
+	 * @return DataResponse<array, Http::STATUS_OK>
+	 * @throws OCSForbiddenException Not allowed to delete app password
+	 *
+	 * 200: App password deleted successfully
 	 */
 	public function deleteAppPassword(): DataResponse {
 		if (!$this->session->exists('app_password')) {
@@ -132,6 +145,13 @@ class AppPasswordController extends \OCP\AppFramework\OCSController {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * Rotate app password
+	 *
+	 * @return DataResponse<array{apppassword: string}, Http::STATUS_OK>
+	 * @throws OCSForbiddenException Not allowed to rotate app password
+	 *
+	 * 200: App password returned
 	 */
 	public function rotateAppPassword(): DataResponse {
 		if (!$this->session->exists('app_password')) {

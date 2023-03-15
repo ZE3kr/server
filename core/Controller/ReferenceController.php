@@ -5,6 +5,7 @@ declare(strict_types=1);
  * @copyright Copyright (c) 2022 Julius Härtl <jus@bitgrid.net>
  *
  * @author Julius Härtl <jus@bitgrid.net>
+ * @author Kate Döen <kate.doeen@nextcloud.com>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -48,10 +49,16 @@ class ReferenceController extends Controller {
 	/**
 	 * @PublicPage
 	 * @NoCSRFRequired
+	 *
+	 * Get a preview for a reference
+	 *
 	 * @param string $referenceId the reference cache key
-	 * @return Response
+	 * @return DataDownloadResponse<'image/*'>|DataResponse<string, Http::STATUS_NOT_FOUND>
+	 *
+	 * 200: Preview returned
+	 * 404: Reference not found
 	 */
-	public function preview(string $referenceId): Response {
+	public function preview(string $referenceId) {
 		$reference = $this->referenceManager->getReferenceByCacheKey($referenceId);
 
 		try {
