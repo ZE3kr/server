@@ -60,7 +60,7 @@
 						</template>
 					</NcButton>
 				</div>
-				<span>{{ t('settings', 'png or jpg, max. 20 MB') }}</span>
+				<span>{{ t('settings', 'The file must be a PNG or JPG') }}</span>
 				<input ref="input"
 					:id="inputId"
 					type="file"
@@ -225,7 +225,10 @@ export default {
 			this.showCropper = false
 			this.loading = true
 
-			this.$refs.cropper.getCroppedCanvas().toBlob(async (blob) => {
+			const canvasData = this.$refs.cropper.getCroppedCanvas()
+			const scaleFactor = canvasData.width > 512 ? 512 / canvasData.width : 1
+
+			this.$refs.cropper.scale(scaleFactor, scaleFactor).getCroppedCanvas().toBlob(async (blob) => {
 				if (blob === null) {
 					showError(t('settings', 'Error cropping profile picture'))
 					this.cancel()
