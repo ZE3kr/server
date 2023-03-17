@@ -1,0 +1,1076 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "theming",
+        "description": "Adjust the Nextcloud theme",
+        "license": {
+            "name": "agpl"
+        },
+        "version": "2.2.0"
+    },
+    "paths": {
+        "/index.php/apps/theming/theme/{themeId}.css": {
+            "parameters": [
+                {
+                    "name": "themeId",
+                    "in": "path",
+                    "description": "ID of the theme",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "get": {
+                "tags": [
+                    "theming"
+                ],
+                "summary": "Get the CSS stylesheet for a theme",
+                "operationId": "theming-get-theme-stylesheet",
+                "parameters": [
+                    {
+                        "name": "plain",
+                        "in": "query",
+                        "description": "Let the browser decide the CSS priority",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "withCustomCss",
+                        "in": "query",
+                        "description": "Include custom CSS",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Stylesheet returned",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Theme not found",
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/index.php/apps/theming/image/{key}": {
+            "parameters": [
+                {
+                    "name": "key",
+                    "in": "path",
+                    "description": "Key of the image",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "get": {
+                "tags": [
+                    "theming"
+                ],
+                "summary": "Get an image",
+                "operationId": "theming-get-image",
+                "parameters": [
+                    {
+                        "name": "useSvg",
+                        "in": "query",
+                        "description": "Return image as SVG",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Image returned",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Image not found",
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/index.php/apps/theming/manifest/{app}": {
+            "parameters": [
+                {
+                    "name": "app",
+                    "in": "path",
+                    "description": "ID of the app",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "get": {
+                "tags": [
+                    "theming"
+                ],
+                "summary": "Get the manifest for an app",
+                "operationId": "theming-get-manifest",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "name",
+                                        "short_name",
+                                        "start_url",
+                                        "theme_color",
+                                        "background_color",
+                                        "description",
+                                        "icons",
+                                        "display"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "short_name": {
+                                            "type": "string"
+                                        },
+                                        "start_url": {
+                                            "type": "string"
+                                        },
+                                        "theme_color": {
+                                            "type": "string"
+                                        },
+                                        "background_color": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        },
+                                        "icons": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "src",
+                                                    "type",
+                                                    "sizes"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "src": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    },
+                                                    "sizes": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "display": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/index.php/apps/theming/favicon/{app}": {
+            "parameters": [
+                {
+                    "name": "app",
+                    "in": "path",
+                    "description": "ID of the app",
+                    "required": true,
+                    "schema": {
+                        "type": "string",
+                        "default": "core"
+                    }
+                }
+            ],
+            "get": {
+                "tags": [
+                    "icon"
+                ],
+                "summary": "Return a 32x32 favicon as png",
+                "operationId": "icon-get-favicon",
+                "responses": {
+                    "200": {
+                        "description": "Favicon returned",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Favicon not found",
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/index.php/apps/theming/icon/{app}": {
+            "parameters": [
+                {
+                    "name": "app",
+                    "in": "path",
+                    "description": "ID of the app",
+                    "required": true,
+                    "schema": {
+                        "type": "string",
+                        "default": "core"
+                    }
+                }
+            ],
+            "get": {
+                "tags": [
+                    "icon"
+                ],
+                "summary": "Return a 512x512 icon for touch devices",
+                "operationId": "icon-get-touch-icon",
+                "responses": {
+                    "200": {
+                        "description": "Touch icon returned",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Touch icon not found",
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/index.php/apps/theming/img/{app}/{image}": {
+            "parameters": [
+                {
+                    "name": "app",
+                    "in": "path",
+                    "description": "ID of the app",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name": "image",
+                    "in": "path",
+                    "description": "image file name (svg required)",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "get": {
+                "tags": [
+                    "icon"
+                ],
+                "summary": "Get a themed icon",
+                "operationId": "icon-get-themed-icon",
+                "responses": {
+                    "200": {
+                        "description": "Themed icon returned",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Themed icon not found",
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/index.php/apps/theming/background": {
+            "get": {
+                "tags": [
+                    "user_theme"
+                ],
+                "summary": "Get the background image",
+                "operationId": "user_theme-get-background",
+                "parameters": [
+                    {
+                        "name": "OCS-APIRequest",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "true"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Background image returned",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "type": "string",
+                                                    "format": "binary"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Background image not found",
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/index.php/apps/theming/background/{type}": {
+            "parameters": [
+                {
+                    "name": "type",
+                    "in": "path",
+                    "description": "Type of background",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "post": {
+                "tags": [
+                    "user_theme"
+                ],
+                "summary": "Set the background",
+                "operationId": "user_theme-set-background",
+                "parameters": [
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Path of the background image",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "color",
+                        "in": "query",
+                        "description": "Color for the background",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "OCS-APIRequest",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "true"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Background set successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "$ref": "#/components/schemas/Background"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Setting background is not possible",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "required": [
+                                                        "error"
+                                                    ],
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "error": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "required": [
+                                                        "error"
+                                                    ],
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "error": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/index.php/apps/theming/background/custom": {
+            "delete": {
+                "tags": [
+                    "user_theme"
+                ],
+                "summary": "Delete the background",
+                "operationId": "user_theme-delete-background",
+                "parameters": [
+                    {
+                        "name": "OCS-APIRequest",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "true"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "$ref": "#/components/schemas/Background"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ocs/v2.php/apps/theming/api/v1/theme/{themeId}/enable": {
+            "parameters": [
+                {
+                    "name": "themeId",
+                    "in": "path",
+                    "description": "the theme ID",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "put": {
+                "tags": [
+                    "user_theme"
+                ],
+                "summary": "Enable theme",
+                "operationId": "user_theme-enable-theme",
+                "parameters": [
+                    {
+                        "name": "OCS-APIRequest",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "true"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Theme enabled successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "type": "object"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Enabling theme is not possible",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ocs/v2.php/apps/theming/api/v1/theme/{themeId}": {
+            "parameters": [
+                {
+                    "name": "themeId",
+                    "in": "path",
+                    "description": "the theme ID",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "delete": {
+                "tags": [
+                    "user_theme"
+                ],
+                "summary": "Disable theme",
+                "operationId": "user_theme-disable-theme",
+                "parameters": [
+                    {
+                        "name": "OCS-APIRequest",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "true"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Theme disabled successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "type": "object"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Disabling theme is not possible",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Background": {
+                "required": [
+                    "backgroundImage",
+                    "backgroundColor",
+                    "version"
+                ],
+                "type": "object",
+                "properties": {
+                    "backgroundImage": {
+                        "type": "string"
+                    },
+                    "backgroundColor": {
+                        "type": "string"
+                    },
+                    "version": {
+                        "type": "string"
+                    }
+                }
+            },
+            "OCSMeta": {
+                "type": "object",
+                "required": [
+                    "status",
+                    "statuscode"
+                ],
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "statuscode": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "totalitems": {
+                        "type": "string"
+                    },
+                    "itemsperpage": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PublicCapabilities": {
+                "required": [
+                    "theming"
+                ],
+                "type": "object",
+                "properties": {
+                    "theming": {
+                        "required": [
+                            "name",
+                            "url",
+                            "slogan",
+                            "color",
+                            "color-text",
+                            "color-element",
+                            "color-element-bright",
+                            "color-element-dark",
+                            "logo",
+                            "background",
+                            "background-plain",
+                            "background-default",
+                            "logoheader",
+                            "favicon"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "url": {
+                                "type": "string"
+                            },
+                            "slogan": {
+                                "type": "string"
+                            },
+                            "color": {
+                                "type": "string"
+                            },
+                            "color-text": {
+                                "type": "string"
+                            },
+                            "color-element": {
+                                "type": "string"
+                            },
+                            "color-element-bright": {
+                                "type": "string"
+                            },
+                            "color-element-dark": {
+                                "type": "string"
+                            },
+                            "logo": {
+                                "type": "string"
+                            },
+                            "background": {
+                                "type": "string"
+                            },
+                            "background-plain": {
+                                "type": "boolean"
+                            },
+                            "background-default": {
+                                "type": "boolean"
+                            },
+                            "logoheader": {
+                                "type": "string"
+                            },
+                            "favicon": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "basic_auth": {
+                "type": "http",
+                "scheme": "basic"
+            },
+            "bearer_auth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        {
+            "basic_auth": []
+        },
+        {
+            "bearer_auth": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "theming",
+            "description": "Class ThemingController\nhandle ajax requests to update the theme"
+        }
+    ]
+}

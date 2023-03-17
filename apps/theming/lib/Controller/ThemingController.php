@@ -18,6 +18,7 @@
  * @author Robin Appelman <robin@icewind.nl>
  * @author Roeland Jago Douma <roeland@famdouma.nl>
  * @author Thomas Citharel <nextcloud@tcit.fr>
+ * @author Kate Döen <kate.doeen@nextcloud.com>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -46,6 +47,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\NotFoundResponse;
 use OCP\Files\IAppData;
 use OCP\Files\NotFoundException;
@@ -314,10 +316,15 @@ class ThemingController extends Controller {
 	 * @NoCSRFRequired
 	 * @NoSameSiteCookieRequired
 	 *
-	 * @param string $key
-	 * @param bool $useSvg
-	 * @return FileDisplayResponse|NotFoundResponse
+	 * Get an image
+	 *
+	 * @param string $key Key of the image
+	 * @param bool $useSvg Return image as SVG
+	 * @return FileDisplayResponse<Http::STATUS_OK>|NotFoundResponse
 	 * @throws NotPermittedException
+	 *
+	 * 200: Image returned
+	 * 404: Image not found
 	 */
 	public function getImage(string $key, bool $useSvg = true) {
 		try {
@@ -347,7 +354,15 @@ class ThemingController extends Controller {
 	 * @NoSameSiteCookieRequired
 	 * @NoTwoFactorRequired
 	 *
-	 * @return DataDisplayResponse|NotFoundResponse
+	 * Get the CSS stylesheet for a theme
+	 *
+	 * @param string $themeId ID of the theme
+	 * @param bool $plain Let the browser decide the CSS priority
+	 * @param bool $withCustomCss Include custom CSS
+	 * @return DataDisplayResponse<Http::STATUS_OK>|NotFoundResponse
+	 *
+	 * 200: Stylesheet returned
+	 * 404: Theme not found
 	 */
 	public function getThemeStylesheet(string $themeId, bool $plain = false, bool $withCustomCss = false) {
 		$themes = $this->themesService->getThemes();
@@ -387,9 +402,12 @@ class ThemingController extends Controller {
 	 * @NoCSRFRequired
 	 * @PublicPage
 	 *
-	 * @return Http\JSONResponse
+	 * Get the manifest for an app
+	 *
+	 * @param string $app ID of the app
+	 * @return JSONResponse<array{name: string, short_name: string, start_url: string, theme_color: string, background_color: string, description: string, icons: array{src: string, type: string, sizes: string}[], display: string}, Http::STATUS_OK>
 	 */
-	public function getManifest($app) {
+	public function getManifest(string $app) {
 		$cacheBusterValue = $this->config->getAppValue('theming', 'cachebuster', '0');
 		if ($app === 'core' || $app === 'settings') {
 			$name = $this->themingDefaults->getName();
@@ -431,7 +449,7 @@ class ThemingController extends Controller {
 				],
 			'display' => 'standalone'
 		];
-		$response = new Http\JSONResponse($responseJS);
+		$response = new JSONResponse($responseJS);
 		$response->cacheFor(3600);
 		return $response;
 	}
