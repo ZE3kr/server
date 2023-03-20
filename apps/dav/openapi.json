@@ -1,0 +1,252 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "dav",
+        "description": "WebDAV endpoint",
+        "license": {
+            "name": "agpl"
+        },
+        "version": "1.26.0"
+    },
+    "paths": {
+        "/ocs/v2.php/apps/dav/api/v1/direct": {
+            "post": {
+                "tags": [
+                    "direct"
+                ],
+                "summary": "Get a direct link to a file",
+                "operationId": "direct-get-url",
+                "parameters": [
+                    {
+                        "name": "fileId",
+                        "in": "query",
+                        "description": "ID of the file",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "expirationTime",
+                        "in": "query",
+                        "description": "Duration until the link expires",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "OCS-APIRequest",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "true"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Direct link returned",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "required": [
+                                                        "url"
+                                                    ],
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "url": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "File not found",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Getting direct link is not possible",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Missing permissions to get direct link",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "required": [
+                                        "ocs"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "ocs": {
+                                            "required": [
+                                                "meta",
+                                                "data"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "meta": {
+                                                    "$ref": "#/components/schemas/OCSMeta"
+                                                },
+                                                "data": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Capabilities": {
+                "required": [
+                    "dav"
+                ],
+                "type": "object",
+                "properties": {
+                    "dav": {
+                        "required": [
+                            "chunking"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "chunking": {
+                                "type": "string"
+                            },
+                            "bulkupload": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "OCSMeta": {
+                "type": "object",
+                "required": [
+                    "status",
+                    "statuscode"
+                ],
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    },
+                    "statuscode": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "totalitems": {
+                        "type": "string"
+                    },
+                    "itemsperpage": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "basic_auth": {
+                "type": "http",
+                "scheme": "basic"
+            },
+            "bearer_auth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        {
+            "basic_auth": []
+        },
+        {
+            "bearer_auth": []
+        }
+    ],
+    "tags": []
+}
