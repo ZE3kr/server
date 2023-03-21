@@ -1,0 +1,58 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "settings",
+        "description": "Nextcloud settings",
+        "license": {
+            "name": "agpl"
+        },
+        "version": "1.9.0"
+    },
+    "paths": {
+        "/index.php/settings/admin/log/download": {
+            "get": {
+                "tags": [
+                    "log_settings"
+                ],
+                "summary": "download logfile",
+                "description": "This endpoint requires admin access",
+                "operationId": "log_settings-download",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {},
+        "securitySchemes": {
+            "basic_auth": {
+                "type": "http",
+                "scheme": "basic"
+            },
+            "bearer_auth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        {
+            "basic_auth": []
+        },
+        {
+            "bearer_auth": []
+        }
+    ],
+    "tags": []
+}
