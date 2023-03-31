@@ -31,6 +31,9 @@ use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
+/**
+ * @template-extends QBMapper<ChangesResult>
+ */
 class ChangesMapper extends QBMapper {
 	public const TABLE_NAME = 'whats_new';
 
