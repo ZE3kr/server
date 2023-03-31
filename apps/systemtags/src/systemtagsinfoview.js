@@ -90,6 +90,7 @@
 			 */
 			_onSelectTag(tag) {
 			// create a mapping entry for this tag
+				console.log(tag.toJSON())
 				this.selectedTagsCollection.create(tag.toJSON())
 			},
 

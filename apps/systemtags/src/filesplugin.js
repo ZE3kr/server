@@ -22,6 +22,8 @@
  *
  */
 
+// TODO Register Vue system tags view in systemtags app?
+
 (function() {
 	OCA.SystemTags = _.extend({}, OCA.SystemTags)
 	if (!OCA.SystemTags) {
@@ -58,4 +60,6 @@
 
 })()
 
+// NOTE core/src/OC/index.js
 OC.Plugins.register('OCA.Files.FileList', OCA.SystemTags.FilesPlugin)
+// TODO Vue implementation in systemtags and OC.register OR Vue implementation in files app

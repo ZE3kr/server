@@ -36,10 +36,16 @@
 		@closed="handleClosed">
 		<!-- TODO: create a standard to allow multiple elements here? -->
 		<template v-if="fileInfo" #description>
-			<LegacyView v-for="view in views"
-				:key="view.cid"
-				:component="view"
-				:file-info="fileInfo" />
+			<SystemTags ref="systemTags"
+				:file-info="fileInfo"
+				:show-system-tags.sync="showSystemTags" />
+			<!-- TODO Remove inline styles -->
+			<div style="display: grid; width: 100%; gap: 8px 0;">
+				<LegacyView v-for="view in views"
+					:key="view.cid"
+					:component="view"
+					:file-info="fileInfo" />
+			</div>
 		</template>
 
 		<!-- Actions menu -->
@@ -96,22 +102,26 @@ import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
 import FileInfo from '../services/FileInfo.js'
 import SidebarTab from '../components/SidebarTab.vue'
 import LegacyView from '../components/LegacyView.vue'
+import SystemTags from '../../../systemtags/src/components/SystemTags.vue'
 
 export default {
 	name: 'Sidebar',
 
 	components: {
+		LegacyView,
 		NcActionButton,
 		NcAppSidebar,
 		NcEmptyContent,
-		LegacyView,
 		SidebarTab,
+		SystemTags,
 	},
 
 	data() {
 		return {
 			// reactive state
 			Sidebar: OCA.Files.Sidebar.state,
+			showSystemTags: true,
+			appliedTags: [],
 			error: null,
 			loading: true,
 			fileInfo: null,
@@ -148,6 +158,8 @@ export default {
 		 * @return {Array}
 		 */
 		views() {
+			// TODO Remove override
+			// return this.Sidebar.views.filter(a => a.el.id !== 'systemTagsInfoView')
 			return this.Sidebar.views
 		},
 
@@ -410,6 +422,7 @@ export default {
 		 * Toggle the tags selector
 		 */
 		toggleTags() {
+			this.showSystemTags = !this.showSystemTags
 			if (OCA.SystemTags && OCA.SystemTags.View) {
 				OCA.SystemTags.View.toggle()
 			}
@@ -435,6 +448,8 @@ export default {
 					this.fileInfo = await FileInfo(this.davPath)
 					// adding this as fallback because other apps expect it
 					this.fileInfo.dir = this.file.split('/').slice(0, -1).join('/')
+
+					// this.$refs.systemTags?.fetchTags?.(this.fileInfo)
 
 					// DEPRECATED legacy views
 					// TODO: remove

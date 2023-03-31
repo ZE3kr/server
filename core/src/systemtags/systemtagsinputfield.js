@@ -240,6 +240,7 @@ import templateSelection from './templates/selection.handlebars'
 					e.preventDefault()
 					return false
 				} else {
+					console.log(e.object)
 					tag = this.collection.get(e.object.id)
 					this._lastUsedTags.unshift(tag.id)
 				}
