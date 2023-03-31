@@ -34,6 +34,9 @@ use OCP\Files\Storage\IStorage;
 use OCP\User\Events\BeforeUserDeletedEvent;
 use OCP\User\Events\UserDeletedEvent;
 
+/**
+ * @template-implements IEventListener<BeforeUserDeletedEvent|UserDeletedEvent>
+ */
 class UserDeletedFilesCleanupListener implements IEventListener {
 	/** @var array<string,IStorage> */
 	private $homeStorageCache = [];

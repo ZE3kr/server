@@ -31,6 +31,9 @@ use OCP\Authentication\TwoFactorAuth\IRegistry;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 
+/**
+ * @template-implements IEventListener<CodesGenerated>
+ */
 class RegistryUpdater implements IEventListener {
 
 	/** @var IRegistry */

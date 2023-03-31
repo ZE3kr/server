@@ -28,6 +28,9 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Group\Events\GroupDeletedEvent;
 
+/**
+ * @template-implements IEventListener<GroupDeletedEvent>
+ */
 class GroupRemovedListener implements IEventListener {
 
 	/** @var AuthorizedGroupService $authorizedGroupService */

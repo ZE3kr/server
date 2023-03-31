@@ -33,6 +33,9 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Util;
 
+/**
+ * @template-implements IEventListener<LoadSidebar>
+ */
 class LoadSidebarScripts implements IEventListener {
 
 	private ICommentsManager $commentsManager;

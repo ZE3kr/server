@@ -29,11 +29,11 @@ namespace OCP\EventDispatcher;
  * @since 17.0.0
  *
  * @template T of Event
+ * @template-covariant T
  */
 interface IEventListener {
 	/**
 	 * @param Event $event
-	 * @psalm-param T $event
 	 *
 	 * @since 17.0.0
 	 */

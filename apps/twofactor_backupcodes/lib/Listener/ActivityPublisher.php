@@ -32,6 +32,9 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\ILogger;
 
+/**
+ * @template-implements IEventListener<CodesGenerated>
+ */
 class ActivityPublisher implements IEventListener {
 
 	/** @var IManager */

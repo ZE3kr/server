@@ -31,6 +31,9 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
+/**
+ * @template-implements IEventListener<BeforeTemplateRenderedEvent>
+ */
 class LegacyBeforeTemplateRenderedListener implements IEventListener {
 
 	/** @var SymfonyAdapter */

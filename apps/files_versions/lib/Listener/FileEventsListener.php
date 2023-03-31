@@ -58,6 +58,9 @@ use OCP\Files\IMimeTypeLoader;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
 
+/**
+ * @template-implements IEventListener<NodeCreatedEvent|BeforeNodeTouchedEvent|NodeTouchedEvent|BeforeNodeWrittenEvent|NodeWrittenEvent|BeforeNodeDeletedEvent|NodeDeletedEvent|NodeRenamedEvent|NodeCopiedEvent|BeforeNodeRenamedEvent>
+ */
 class FileEventsListener implements IEventListener {
 	private IRootFolder $rootFolder;
 	private VersionsMapper $versionsMapper;

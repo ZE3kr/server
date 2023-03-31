@@ -37,6 +37,8 @@ use OCP\IGroupManager;
  * Class that cache the relation Group ID -> Display name
  *
  * This saves fetching the group from the backend for "just" the display name
+ *
+ * @template-implements IEventListener<GroupChangedEvent>
  */
 class DisplayNameCache implements IEventListener {
 	private CappedMemoryCache $cache;

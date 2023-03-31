@@ -30,6 +30,9 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 
+/**
+ * @template-implements IEventListener<BeforeTemplateRenderedEvent>
+ */
 class BeforeTemplateRenderedListener implements IEventListener {
 	public function handle(Event $event): void {
 		if (!($event instanceof BeforeTemplateRenderedEvent)) {

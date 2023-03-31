@@ -40,6 +40,9 @@ use Sabre\VObject\Reader;
 use Sabre\VObject\UUIDUtil;
 use Throwable;
 
+/**
+ * @template-implements IEventListener<ContactInteractedWithEvent>
+ */
 class ContactInteractionListener implements IEventListener {
 	private RecentContactMapper $mapper;
 	private CardSearchDao $cardSearchDao;

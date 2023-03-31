@@ -33,6 +33,9 @@ use OCP\BackgroundJob\IJobList;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 
+/**
+ * @template-implements IEventListener<RegistryEvent>
+ */
 class ProviderDisabled implements IEventListener {
 
 	/** @var IRegistry */

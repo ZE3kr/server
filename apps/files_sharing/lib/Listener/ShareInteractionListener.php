@@ -36,6 +36,9 @@ use OCP\Share\Events\ShareCreatedEvent;
 use OCP\Share\IShare;
 use function in_array;
 
+/**
+ * @template-implements IEventListener<ShareCreatedEvent>
+ */
 class ShareInteractionListener implements IEventListener {
 	private const SUPPORTED_SHARE_TYPES = [
 		IShare::TYPE_USER,

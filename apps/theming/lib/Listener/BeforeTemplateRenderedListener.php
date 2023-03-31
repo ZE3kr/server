@@ -38,6 +38,9 @@ use OCP\IConfig;
 use OCP\IUserSession;
 use Psr\Container\ContainerInterface;
 
+/**
+ * @template-implements IEventListener<BeforeTemplateRenderedEvent>
+ */
 class BeforeTemplateRenderedListener implements IEventListener {
 
 	private IInitialState $initialState;
@@ -96,7 +99,7 @@ class BeforeTemplateRenderedListener implements IEventListener {
 				$this->config->getUserValue($userId, Application::APP_ID, 'background_color', BackgroundService::DEFAULT_COLOR),
 			);
 
-			/** 
+			/**
 			 * Admin background. `backgroundColor` if disabled,
 			 * mime type if defined and empty by default
 			 */

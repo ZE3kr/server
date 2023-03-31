@@ -32,6 +32,9 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
+/**
+ * @template-implements IEventListener<LoadAdditionalScriptsEvent>
+ */
 class LegacyLoadAdditionalScriptsAdapter implements IEventListener {
 
 	/** @var SymfonyAdapter */

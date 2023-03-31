@@ -31,6 +31,9 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Notification\IManager;
 
+/**
+ * @template-implements IEventListener<CodesGenerated>
+ */
 class ClearNotifications implements IEventListener {
 
 	/** @var IManager */

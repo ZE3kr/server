@@ -31,6 +31,9 @@ use OCP\Config\BeforePreferenceSetEvent;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 
+/**
+ * @template-implements IEventListener<BeforePreferenceSetEvent|BeforePreferenceDeletedEvent>
+ */
 class BeforePreferenceListener implements IEventListener {
 	public function handle(Event $event): void {
 		if (!$event instanceof BeforePreferenceSetEvent

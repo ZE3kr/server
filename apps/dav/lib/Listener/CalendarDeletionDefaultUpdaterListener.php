@@ -34,7 +34,7 @@ use Throwable;
 use function strpos;
 
 /**
- * @template-implements IEventListener<\OCA\DAV\Events\CalendarDeletedEvent>
+ * @template-implements IEventListener<CalendarDeletedEvent>
  */
 class CalendarDeletionDefaultUpdaterListener implements IEventListener {
 

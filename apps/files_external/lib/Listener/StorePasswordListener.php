@@ -33,6 +33,9 @@ use OCP\Security\ICredentialsManager;
 use OCP\User\Events\PasswordUpdatedEvent;
 use OCP\User\Events\UserLoggedInEvent;
 
+/**
+ * @template-implements IEventListener<UserLoggedInEvent|PasswordUpdatedEvent>
+ */
 class StorePasswordListener implements IEventListener {
 	/** @var ICredentialsManager */
 	private $credentialsManager;

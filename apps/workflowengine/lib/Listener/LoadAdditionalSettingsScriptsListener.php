@@ -34,6 +34,9 @@ use function class_exists;
 use function function_exists;
 use OCP\Util;
 
+/**
+ * @template-implements IEventListener<Event>
+ */
 class LoadAdditionalSettingsScriptsListener implements IEventListener {
 	public function handle(Event $event): void {
 		if (!function_exists('style')) {

@@ -29,6 +29,9 @@ use OCP\Comments\CommentsEntityEvent;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 
+/**
+ * @template-implements IEventListener<CommentsEntityEvent>
+ */
 class CommentsEntityEventListener implements IEventListener {
 	public function handle(Event $event): void {
 		if (!($event instanceof CommentsEntityEvent)) {

@@ -42,6 +42,9 @@ use Psr\Log\LoggerInterface;
 use Throwable;
 use function sprintf;
 
+/**
+ * @template-implements IEventListener<CalendarMovedToTrashEvent>
+ */
 class CalendarObjectReminderUpdaterListener implements IEventListener {
 
 	/** @var ReminderBackend */
