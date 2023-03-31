@@ -958,6 +958,7 @@ class ComposerStaticInit749170dad3f5e7f9ca158f5a9f04f6a2
         'OC\\Core\\Command\\Db\\Migrations\\GenerateCommand' => __DIR__ . '/../../..' . '/core/Command/Db/Migrations/GenerateCommand.php',
         'OC\\Core\\Command\\Db\\Migrations\\MigrateCommand' => __DIR__ . '/../../..' . '/core/Command/Db/Migrations/MigrateCommand.php',
         'OC\\Core\\Command\\Db\\Migrations\\StatusCommand' => __DIR__ . '/../../..' . '/core/Command/Db/Migrations/StatusCommand.php',
+        'OC\\Core\\Command\\Debug\\File' => __DIR__ . '/../../..' . '/core/Command/Debug/File.php',
         'OC\\Core\\Command\\Encryption\\ChangeKeyStorageRoot' => __DIR__ . '/../../..' . '/core/Command/Encryption/ChangeKeyStorageRoot.php',
         'OC\\Core\\Command\\Encryption\\DecryptAll' => __DIR__ . '/../../..' . '/core/Command/Encryption/DecryptAll.php',
         'OC\\Core\\Command\\Encryption\\Disable' => __DIR__ . '/../../..' . '/core/Command/Encryption/Disable.php',

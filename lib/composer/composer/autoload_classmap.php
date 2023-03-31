@@ -925,6 +925,7 @@ return array(
     'OC\\Core\\Command\\Db\\Migrations\\GenerateCommand' => $baseDir . '/core/Command/Db/Migrations/GenerateCommand.php',
     'OC\\Core\\Command\\Db\\Migrations\\MigrateCommand' => $baseDir . '/core/Command/Db/Migrations/MigrateCommand.php',
     'OC\\Core\\Command\\Db\\Migrations\\StatusCommand' => $baseDir . '/core/Command/Db/Migrations/StatusCommand.php',
+    'OC\\Core\\Command\\Debug\\File' => $baseDir . '/core/Command/Debug/File.php',
     'OC\\Core\\Command\\Encryption\\ChangeKeyStorageRoot' => $baseDir . '/core/Command/Encryption/ChangeKeyStorageRoot.php',
     'OC\\Core\\Command\\Encryption\\DecryptAll' => $baseDir . '/core/Command/Encryption/DecryptAll.php',
     'OC\\Core\\Command\\Encryption\\Disable' => $baseDir . '/core/Command/Encryption/Disable.php',
