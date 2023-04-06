@@ -35,6 +35,8 @@ namespace OCA\DAV\Connector\Sabre;
 
 use OC\AppFramework\Http\Request;
 use OC\Metadata\IMetadataManager;
+use OCA\DAV\SystemTag\SystemTagMappingNode;
+use OCA\DAV\SystemTag\SystemTagNode;
 use OCP\Constants;
 use OCP\Files\ForbiddenException;
 use OCP\Files\StorageNotAvailableException;
@@ -84,6 +86,7 @@ class FilesPlugin extends ServerPlugin {
 	public const SUBFOLDER_COUNT_PROPERTYNAME = '{http://nextcloud.org/ns}contained-folder-count';
 	public const SUBFILE_COUNT_PROPERTYNAME = '{http://nextcloud.org/ns}contained-file-count';
 	public const FILE_METADATA_SIZE = '{http://nextcloud.org/ns}file-metadata-size';
+	public const FILE_TAGS = '{http://nextcloud.org/ns}tags';
 
 	/** Reference to main server object */
 	private ?Server $server = null;
@@ -365,6 +368,17 @@ class FilesPlugin extends ServerPlugin {
 				return $node->getNoteFromShare(
 					$user->getUID()
 				);
+			});
+
+			$propFind->handle(self::FILE_TAGS, function() use ($node): TagList {
+				$count = random_int(0,4);
+				$list = array();
+
+				for ($i = 0; $i < $count; $i++) {
+					$list[] = "test " . $i;
+				}
+
+				return new TagList($list);
 			});
 
 			$propFind->handle(self::DATA_FINGERPRINT_PROPERTYNAME, function () use ($node) {
